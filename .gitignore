@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+gesture_env/
+.env/
+
+# Build artifacts
+build/
+dist/
+*.spec
+
+# Executables & binaries
+*.exe
+*.dll
+*.pyd
+*.so
+
+# MediaPipe / OpenCV caches
+.cache/
