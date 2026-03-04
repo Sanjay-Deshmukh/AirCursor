@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirCursor – Control Your Computer with Hand Gestures</title>
+    <meta name="description" content="AirCursor is a hand gesture controlled mouse application powered by AI. Move, click, scroll, and control your computer using just your webcam and hand gestures.">
+    <meta name="keywords" content="AirCursor, hand gesture, mouse control, computer vision, MediaPipe, touchless, gesture recognition">
+    <meta name="author" content="Sanjay Deshmukh">
+    <meta property="og:title" content="AirCursor – Hand Gesture Controlled Mouse">
+    <meta property="og:description" content="Control your computer with hand gestures. No extra hardware needed – just a webcam.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated Particles Background -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <div class="logo-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z" fill="url(#grad1)"/>
+                        <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1z" fill="url(#grad1)"/>
+                        <defs>
+                            <linearGradient id="grad1" x1="5" y1="2" x2="19" y2="21" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#00d4ff"/>
+                                <stop offset="1" stop-color="#7b2ff7"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span>AirCursor</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#gestures">Gestures</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#tech-stack">Tech Stack</a></li>
+            </ul>
+            <a href="https://github.com/Sanjay-Deshmukh/AirCursor/releases/latest/download/AirCursor.exe" class="nav-download-btn" id="nav-download-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Download
+            </a>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#gestures">Gestures</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#tech-stack">Tech Stack</a></li>
+            <li>
+                <a href="https://github.com/Sanjay-Deshmukh/AirCursor/releases/latest/download/AirCursor.exe" class="mobile-download-btn">
+                    Download .exe
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-glow hero-glow-1"></div>
+        <div class="hero-glow hero-glow-2"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    Open Source &middot; Free Forever
+                </div>
+                <h1>
+                    Control Your Computer<br>
+                    <span class="gradient-text">With Hand Gestures</span>
+                </h1>
+                <p class="hero-subtitle">
+                    AirCursor transforms your webcam into a powerful gesture recognition system. 
+                    Move your cursor, click, scroll, and take screenshots — all without touching your mouse.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://github.com/Sanjay-Deshmukh/AirCursor/releases/latest/download/AirCursor.exe" class="btn-primary" id="hero-download-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download for Windows
+                        <span class="btn-badge">.exe</span>
+                    </a>
+                    <a href="https://github.com/Sanjay-Deshmukh/AirCursor" target="_blank" class="btn-secondary" id="hero-github-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        View on GitHub
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-value">0ms</span>
+                        <span class="stat-label">Latency</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-value">100%</span>
+                        <span class="stat-label">Free</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-value">AI</span>
+                        <span class="stat-label">Powered</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-image-wrapper">
+                    <div class="hero-image-glow"></div>
+                    <img src="assets/hero_banner.png" alt="AirCursor hand gesture control visualization" class="hero-image">
+                    <div class="floating-card card-1">
+                        <div class="card-icon">👆</div>
+                        <div class="card-text">Cursor Move</div>
+                    </div>
+                    <div class="floating-card card-2">
+                        <div class="card-icon">🤏</div>
+                        <div class="card-text">Left Click</div>
+                    </div>
+                    <div class="floating-card card-3">
+                        <div class="card-icon">📸</div>
+                        <div class="card-text">Screenshot</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Features</span>
+                <h2>Everything You Need,<br><span class="gradient-text">Nothing You Don't</span></h2>
+                <p class="section-subtitle">AirCursor packs powerful gesture recognition into a lightweight, easy-to-use application.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" id="feature-cursor">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#featGrad1)" stroke-width="1.5">
+                            <path d="M5 3l14 9-6 2-4 7-4-18z"/>
+                            <defs><linearGradient id="featGrad1" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#00d4ff"/><stop offset="1" stop-color="#7b2ff7"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <h3>Cursor Control</h3>
+                    <p>Move your mouse cursor freely by simply moving your hand in front of the webcam. Smooth, responsive, and precise.</p>
+                </div>
+                <div class="feature-card" id="feature-click">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#featGrad2)" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="3"/>
+                            <defs><linearGradient id="featGrad2" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#00d4ff"/><stop offset="1" stop-color="#7b2ff7"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <h3>Click Gestures</h3>
+                    <p>Perform left clicks with a simple pinch gesture. Natural and intuitive — no learning curve required.</p>
+                </div>
+                <div class="feature-card" id="feature-scroll">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#featGrad3)" stroke-width="1.5">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <polyline points="19 12 12 19 5 12"/>
+                            <defs><linearGradient id="featGrad3" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#00d4ff"/><stop offset="1" stop-color="#7b2ff7"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <h3>Scroll Support</h3>
+                    <p>Scroll up and down effortlessly using finger gestures. Browse pages, documents, and feeds hands-free.</p>
+                </div>
+                <div class="feature-card" id="feature-screenshot">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#featGrad4)" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                            <defs><linearGradient id="featGrad4" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#00d4ff"/><stop offset="1" stop-color="#7b2ff7"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <h3>Screenshots</h3>
+                    <p>Take screenshots instantly with a two-fist gesture. Images are saved automatically with timestamps.</p>
+                </div>
+                <div class="feature-card" id="feature-multitask">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#featGrad5)" stroke-width="1.5">
+                            <rect x="2" y="3" width="20" height="14" rx="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                            <defs><linearGradient id="featGrad5" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#00d4ff"/><stop offset="1" stop-color="#7b2ff7"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <h3>Window Management</h3>
+                    <p>Switch between tabs, close applications, and manage windows with intuitive two-hand gestures.</p>
+                </div>
+                <div class="feature-card" id="feature-nohardware">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#featGrad6)" stroke-width="1.5">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                            <defs><linearGradient id="featGrad6" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#00d4ff"/><stop offset="1" stop-color="#7b2ff7"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <h3>Webcam Only</h3>
+                    <p>No expensive hardware needed. AirCursor works with any standard webcam that comes with your laptop or PC.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gestures Section -->
+    <section id="gestures">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Gesture Guide</span>
+                <h2>Intuitive Gestures,<br><span class="gradient-text">Powerful Control</span></h2>
+                <p class="section-subtitle">Master these simple hand gestures to take full control of your computer.</p>
+            </div>
+            <div class="gestures-showcase">
+                <div class="gesture-row">
+                    <div class="gesture-item" id="gesture-move">
+                        <div class="gesture-emoji">✌️</div>
+                        <div class="gesture-info">
+                            <h3>Index + Middle Finger</h3>
+                            <p>Move cursor across the screen</p>
+                        </div>
+                        <div class="gesture-tag">Cursor</div>
+                    </div>
+                    <div class="gesture-item" id="gesture-click">
+                        <div class="gesture-emoji">🤏</div>
+                        <div class="gesture-info">
+                            <h3>Thumb + Index Pinch</h3>
+                            <p>Left click on any element</p>
+                        </div>
+                        <div class="gesture-tag">Click</div>
+                    </div>
+                    <div class="gesture-item" id="gesture-scrollup">
+                        <div class="gesture-emoji">☝️</div>
+                        <div class="gesture-info">
+                            <h3>Index Finger Up</h3>
+                            <p>Scroll page upward</p>
+                        </div>
+                        <div class="gesture-tag">Scroll Up</div>
+                    </div>
+                    <div class="gesture-item" id="gesture-scrolldown">
+                        <div class="gesture-emoji">👍</div>
+                        <div class="gesture-info">
+                            <h3>Thumb Up Only</h3>
+                            <p>Scroll page downward</p>
+                        </div>
+                        <div class="gesture-tag">Scroll Down</div>
+                    </div>
+                    <div class="gesture-item" id="gesture-screenshot">
+                        <div class="gesture-emoji">✊✊</div>
+                        <div class="gesture-info">
+                            <h3>Two Fists</h3>
+                            <p>Capture a screenshot instantly</p>
+                        </div>
+                        <div class="gesture-tag">Screenshot</div>
+                    </div>
+                    <div class="gesture-item" id="gesture-tab">
+                        <div class="gesture-emoji">🖐️🖐️</div>
+                        <div class="gesture-info">
+                            <h3>Two Open Palms</h3>
+                            <p>Switch to previous tab/window</p>
+                        </div>
+                        <div class="gesture-tag">Tab Switch</div>
+                    </div>
+                    <div class="gesture-item" id="gesture-close">
+                        <div class="gesture-emoji">🖐️✊</div>
+                        <div class="gesture-info">
+                            <h3>Palm + Fist</h3>
+                            <p>Close current application</p>
+                        </div>
+                        <div class="gesture-tag">Close App</div>
+                    </div>
+                    <div class="gesture-item" id="gesture-playpause">
+                        <div class="gesture-emoji">🖐️</div>
+                        <div class="gesture-info">
+                            <h3>Open Palm</h3>
+                            <p>Play or pause media</p>
+                        </div>
+                        <div class="gesture-tag">Play/Pause</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">How It Works</span>
+                <h2>Simple Setup,<br><span class="gradient-text">Instant Magic</span></h2>
+                <p class="section-subtitle">Get up and running in under a minute with just three steps.</p>
+            </div>
+            <div class="steps-container">
+                <div class="step" id="step-download">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Download & Launch</h3>
+                        <p>Download the AirCursor.exe file and run it. No installation or configuration needed.</p>
+                    </div>
+                    <div class="step-visual">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="step-connector">
+                    <div class="connector-line"></div>
+                    <div class="connector-dot"></div>
+                </div>
+                <div class="step" id="step-webcam">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Enable Your Webcam</h3>
+                        <p>Ensure your webcam is connected and positioned well. A plain background and good lighting work best.</p>
+                    </div>
+                    <div class="step-visual">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="step-connector">
+                    <div class="connector-line"></div>
+                    <div class="connector-dot"></div>
+                </div>
+                <div class="step" id="step-gesture">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Start Gesturing</h3>
+                        <p>Use hand gestures to control your cursor, click, scroll, take screenshots and more!</p>
+                    </div>
+                    <div class="step-visual">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7l-1.15-1.71a2 2 0 0 0-3.39 2.13L7 20h10l3-6v-3z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Preview Section -->
+    <section id="demo">
+        <div class="section-container">
+            <div class="demo-wrapper">
+                <div class="demo-text">
+                    <span class="section-tag">See It In Action</span>
+                    <h2>AI-Powered<br><span class="gradient-text">Gesture Engine</span></h2>
+                    <p>AirCursor uses MediaPipe's state-of-the-art hand tracking technology to detect 21 hand landmarks in real-time, mapping your finger movements to precise on-screen actions.</p>
+                    <ul class="demo-features">
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                            Real-time 21-point hand landmark detection
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                            Smooth cursor with exponential smoothing
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                            Multi-hand gesture support
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                            Low-latency processing at 60fps
+                        </li>
+                    </ul>
+                </div>
+                <div class="demo-visual">
+                    <img src="assets/demo_preview.png" alt="AirCursor in action - person controlling computer with hand gestures" class="demo-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="tech-stack">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Built With</span>
+                <h2>Powered by<br><span class="gradient-text">Modern Technology</span></h2>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-card" id="tech-python">
+                    <div class="tech-logo">🐍</div>
+                    <h3>Python 3.9+</h3>
+                    <p>Core application logic</p>
+                </div>
+                <div class="tech-card" id="tech-opencv">
+                    <div class="tech-logo">📹</div>
+                    <h3>OpenCV</h3>
+                    <p>Video capture & processing</p>
+                </div>
+                <div class="tech-card" id="tech-mediapipe">
+                    <div class="tech-logo">🤖</div>
+                    <h3>MediaPipe</h3>
+                    <p>Hand tracking & landmarks</p>
+                </div>
+                <div class="tech-card" id="tech-pyautogui">
+                    <div class="tech-logo">🖱️</div>
+                    <h3>PyAutoGUI</h3>
+                    <p>Mouse & keyboard control</p>
+                </div>
+                <div class="tech-card" id="tech-numpy">
+                    <div class="tech-logo">🔢</div>
+                    <h3>NumPy</h3>
+                    <p>Mathematical computations</p>
+                </div>
+                <div class="tech-card" id="tech-pynput">
+                    <div class="tech-logo">⌨️</div>
+                    <h3>Pynput</h3>
+                    <p>Input device control</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta">
+        <div class="section-container">
+            <div class="cta-box">
+                <div class="cta-glow"></div>
+                <h2>Ready to Go<br><span class="gradient-text">Touchless?</span></h2>
+                <p>Download AirCursor now and experience the future of computer interaction. Free, open-source, and runs on any Windows PC with a webcam.</p>
+                <div class="cta-actions">
+                    <a href="https://github.com/Sanjay-Deshmukh/AirCursor/releases/latest/download/AirCursor.exe" class="btn-primary btn-large" id="cta-download-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download AirCursor.exe
+                    </a>
+                    <a href="https://github.com/Sanjay-Deshmukh/AirCursor" target="_blank" class="btn-ghost" id="cta-github-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        Star on GitHub
+                    </a>
+                </div>
+                <p class="cta-note">Windows 10/11 &middot; No installation required &middot; ~50MB</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <div class="logo-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z" fill="url(#footGrad)"/>
+                                <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1z" fill="url(#footGrad)"/>
+                                <defs>
+                                    <linearGradient id="footGrad" x1="5" y1="2" x2="19" y2="21" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#00d4ff"/>
+                                        <stop offset="1" stop-color="#7b2ff7"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <span>AirCursor</span>
+                    </div>
+                    <p class="footer-tagline">Hand gesture controlled mouse powered by AI</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#gestures">Gestures</a>
+                        <a href="#how-it-works">How It Works</a>
+                        <a href="https://github.com/Sanjay-Deshmukh/AirCursor/releases/latest/download/AirCursor.exe">Download</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Resources</h4>
+                        <a href="https://github.com/Sanjay-Deshmukh/AirCursor" target="_blank">GitHub</a>
+                        <a href="https://github.com/Sanjay-Deshmukh/AirCursor/issues" target="_blank">Issues</a>
+                        <a href="https://github.com/Sanjay-Deshmukh/AirCursor/blob/main/README.md" target="_blank">Documentation</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Author</h4>
+                        <a href="https://github.com/Sanjay-Deshmukh" target="_blank">Sanjay Deshmukh</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AirCursor. Open-source under MIT License.</p>
+                <div class="footer-socials">
+                    <a href="https://github.com/Sanjay-Deshmukh" target="_blank" aria-label="GitHub Profile" id="footer-github-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
