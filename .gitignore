@@ -18,5 +18,8 @@ dist/
 *.pyd
 *.so
 
+# Screenshots
+screenshots/
+
 # MediaPipe / OpenCV caches
 .cache/
